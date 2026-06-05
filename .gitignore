@@ -1,0 +1,7 @@
+# Compiled BPF bytecode
+*.o
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
