@@ -1,83 +1,77 @@
-# eBPF Networking Lab — Programs
+# eBPF Networking Lab
 
-Companion code for the **eBPF Networking** Isovalent lab. During the lab this
-repository is cloned to `/root/ebpf-networking-lab` and you compile, load, and
-inspect each program from there.
+This repository contains hands-on examples for learning eBPF networking hooks.
 
-## Layout
+## 📁 Directory Structure
 
 ```
-.
-├── xdp/      xdp_drop.c          DDoS mitigation — drop blocked source IPs (XDP)
-├── tc/       tc_ratelimit.c      Token-bucket rate limiting (TC egress)
-├── socket/   sockops_tracker.c   Per-cgroup TCP connection tracking (sockops)
-├── bpftrace/ observe.sh          Interactive menu of observability one-liners
-└── Makefile  build targets: make xdp | tc | socket | all | clean
+ebpf-networking-lab/
+├── examples/          # Challenge 01: Networking fundamentals demos
+├── xdp/              # Challenge 03: XDP packet processing
+├── tc/               # Challenge 04: Traffic Control (TC)
+├── socket/           # Challenge 05: Socket-level hooks
+└── bpftrace/         # Challenge 06: Network observability
 ```
 
-## Build
+## 🎯 Lab Overview
+
+This lab teaches you how to use eBPF for networking through three use cases:
+
+1. **Traffic Control** - Filtering, dropping, rate limiting (XDP, TC)
+2. **Optimization** - Accelerating same-node traffic (socket hooks)
+3. **Observability** - Understanding network behavior (kprobes, tracepoints)
+
+## 🚀 Getting Started
+
+Follow the [eBPF Networking track](https://play.instruqt.com/isovalent/tracks/ebpf-networking) on Instruqt.
+
+Or explore locally:
+
+### Prerequisites
+
+- Linux kernel 5.10+ with BTF support
+- Tools: `clang`, `bpftool`, `bpftrace`, `iproute2`, `tcpdump`
+
+### Challenge 01: Networking Fundamentals
 
 ```bash
-make all        # build every program
-make xdp        # build just xdp/xdp_drop.o
-make clean      # remove all .o files
+cd examples/
+./capture_packet.sh       # See packet structure
+./show_layer2.sh          # Layer 2 (interfaces)
+./show_layer3.sh          # Layer 3 (routing)
+./show_layer4.sh          # Layer 4 (sockets)
+./show_layer7.sh          # Layer 7 (HTTP)
 ```
 
-Requires `clang`, `llvm`, `libbpf` headers, and kernel headers for the running
-kernel. The lab environment ships with these preinstalled.
+All scripts include explanations and expected output.
 
-## Programs
+## 📚 Learning Path
 
-### `xdp/xdp_drop.c` — DDoS mitigation
-Parses Ethernet + IPv4 headers, looks up the source IP in the `blocked_ips`
-hash map, and returns `XDP_DROP` for blocked IPs (`XDP_PASS` otherwise). Drop
-and pass counts are kept in the `xdp_stats` array map.
+1. **Challenge 01**: Networking fundamentals (this repository's `examples/`)
+2. **Challenge 02**: Kernel networking internals
+3. **Challenge 03**: XDP packet processing (`xdp/`)
+4. **Challenge 04**: Traffic Control with TC (`tc/`)
+5. **Challenge 05**: Socket-level networking (`socket/`)
+6. **Challenge 06**: Network observability (`bpftrace/`)
+7. **Challenge 07**: Real-world architectures (Cilium, Hubble, Katran)
+8. **Challenge 08**: Quiz
+9. **Challenge 09**: Practical exam
 
-```bash
-make xdp
-ip link set dev lo xdpgeneric obj xdp/xdp_drop.o sec xdp
-bpftool map update name blocked_ips key 0x7f 0x00 0x00 0x01 value 0x01 0x00 0x00 0x00  # block 127.0.0.1
-bpftool map dump   name xdp_stats
-ip link set dev lo xdpgeneric off
-```
+## 🏆 Badge
 
-### `tc/tc_ratelimit.c` — token-bucket rate limiting
-Refills a per-interface token bucket at a configured rate and returns
-`TC_ACT_OK` (pass) or `TC_ACT_SHOT` (drop). Config lives in `rate_config`;
-counters in `tc_stats`.
+Complete the lab to earn a **Silver eBPF Networking** badge!
 
-```bash
-make tc
-tc qdisc  add dev lo clsact
-tc filter add dev lo egress bpf da obj tc/tc_ratelimit.o sec tc
-bpftool map dump name tc_stats
-tc qdisc del dev lo clsact
-```
+## 📖 Additional Resources
 
-### `socket/sockops_tracker.c` — connection tracking
-A `sockops` program that fires on TCP connection establishment, records the
-4-tuple into a `SOCKHASH` (for `sk_msg` redirection), and keeps per-cgroup
-connection counts in `cgroup_stats`.
+- [Getting Started with eBPF](https://play.instruqt.com/isovalent/tracks/ebpf-getting-started) - eBPF fundamentals
+- [Cilium Documentation](https://docs.cilium.io/) - Production eBPF networking
+- [BCC Tools](https://github.com/iovisor/bcc) - eBPF tracing tools
+- [bpftrace](https://github.com/iovisor/bpftrace) - High-level tracing language
 
-```bash
-make socket
-bpftool prog load   socket/sockops_tracker.o /sys/fs/bpf/sockops_tracker type sockops
-bpftool cgroup attach /sys/fs/cgroup sock_ops pinned /sys/fs/bpf/sockops_tracker
-bpftool map dump    name cgroup_stats
-bpftool cgroup detach /sys/fs/cgroup sock_ops pinned /sys/fs/bpf/sockops_tracker
-rm /sys/fs/bpf/sockops_tracker
-```
+## 🤝 Contributing
 
-### `bpftrace/observe.sh` — observability one-liners
-Interactive menu of common network observability patterns (connection
-tracking, latency, retransmissions, drops, state changes).
+This lab is part of the Isovalent learning platform. For issues or suggestions, contact the Isovalent TME team.
 
-```bash
-./bpftrace/observe.sh
-```
+## 📄 License
 
-## References
-
-- [eBPF documentation](https://ebpf.io/)
-- [Cilium eBPF library](https://github.com/cilium/ebpf)
-- [bpftrace](https://github.com/bpftrace/bpftrace)
+Educational materials provided by Isovalent.
