@@ -1,56 +1,51 @@
-# Networking Examples
+# Examples Directory
 
-This directory contains example scripts used in Challenge 01 to demonstrate networking concepts.
+This directory previously contained shell scripts that wrapped networking commands with explanations. Those scripts have been removed because:
 
-## Scripts Overview
+1. **Commands are now inline** in the Instruqt assignment files
+2. **Explanations are in the assignment** - no need to duplicate
+3. **Direct commands are clearer** - users see exactly what runs
 
-### Layer 2 (Data Link)
-- **`show_layer2.sh`** - Display network interfaces, MAC addresses, and link statistics
-  - Uses: `ip link show`, `ip -s link`
+## What Was Removed
 
-### Layer 3 (Network)
-- **`show_layer3.sh`** - Display IP addresses, routing table, and route lookups
-  - Uses: `ip addr show`, `ip route show`, `ip route get`
+All example scripts (`.sh` files) have been moved directly into Challenge 01 and Challenge 03 assignments as inline commands with explanations:
 
-### Layer 4 (Transport)
-- **`show_layer4.sh`** - Display TCP/UDP sockets, connections, and statistics
-  - Uses: `ss -tlnp`, `ss -tnp`, `ss -s`
-- **`trace_socket_syscalls.sh`** - Trace socket system calls with strace
-  - Uses: `strace` (standard tool, not eBPF)
+- `capture_packet.sh` → Direct `tcpdump` command (Challenge 01)
+- `show_layer2.sh` → Direct `ip link` commands (Challenge 03)
+- `show_layer3.sh` → Direct `ip addr/route` commands (Challenge 03)
+- `show_layer4.sh` → Direct `ss` commands (Challenge 03)
+- `trace_socket_syscalls.sh` → Direct `strace` command (Challenge 03)
+- `show_layer7.sh` → Direct `tcpdump` command (Challenge 03)
 
-### Layer 7 (Application)
-- **`show_layer7.sh`** - Capture and display HTTP traffic (application layer)
-  - Uses: `tcpdump -A`
+## Why This Is Better
 
-### Packet Structure
-- **`capture_packet.sh`** - Capture a packet and show its structure (all headers)
-  - Uses: `tcpdump -XX`
-
-## Usage
-
-All scripts are self-contained and include:
-- Explanation of what they do
-- Command breakdowns (flags and options explained)
-- Expected output examples
-- Interpretation of the output
-
-Simply run any script:
-```bash
-./show_layer2.sh
-./show_layer3.sh
-./show_layer4.sh
-./trace_socket_syscalls.sh
-./show_layer7.sh
-./capture_packet.sh
+**Before** (with scripts):
+```markdown
+```shell,run
+/root/ebpf-networking-lab/examples/show_layer2.sh
+```
 ```
 
-## Prerequisites
+Users didn't see what command actually ran.
 
-- HTTP server running on `localhost:8080` (for traffic generation)
-- Standard Linux networking tools: `ip`, `ss`, `tcpdump`, `strace`, `curl`
+**After** (direct commands):
+```markdown
+```shell,run
+ip link show
+```
 
-## Notes
+Command breakdown:
+- `ip` - Network configuration utility
+- `link` - Layer 2 (link layer)
+- `show` - Display interfaces
+```
 
-These scripts use **standard Linux tools** only (no eBPF yet!). They demonstrate networking concepts before introducing eBPF hooks in later challenges.
+Users see the actual command, understand each flag, and can adapt it to their needs.
 
-Once you understand these layers with standard tools, you'll learn how to observe and manipulate them with eBPF programs.
+## What Remains in This Repository
+
+- **eBPF C programs**: `xdp/`, `tc/`, `socket/` directories contain actual eBPF programs (not wrapper scripts)
+- **bpftrace examples**: `bpftrace/` directory contains bpftrace scripts for observability
+- **Makefile**: For compiling eBPF programs
+
+This directory (`examples/`) may be removed entirely in the future.

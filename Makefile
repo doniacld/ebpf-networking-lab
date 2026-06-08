@@ -4,7 +4,8 @@
 # Requires: clang, llvm, libbpf headers (and linux-headers for the running kernel).
 
 CLANG ?= clang
-CFLAGS := -O2 -g -target bpf
+ARCH := $(shell uname -m)
+CFLAGS := -O2 -g -target bpf -I/usr/include/$(ARCH)-linux-gnu
 
 .PHONY: all xdp tc socket clean
 
