@@ -1,0 +1,22 @@
+#!/usr/bin/env bpftrace
+/*
+ * Solution: TCP Connection Latency Histogram
+ */
+
+BEGIN
+{
+    printf("Measuring TCP connection latency... (Ctrl+C to see histogram)\n");
+}
+
+kprobe:tcp_connect
+{
+    @start[tid] = nsecs;
+}
+
+kretprobe:tcp_connect
+/@start[tid]/
+{
+    $latency_us = (nsecs - @start[tid]) / 1000;
+    @connect_latency_us = hist($latency_us);
+    delete(@start[tid]);
+}

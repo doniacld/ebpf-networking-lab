@@ -1,0 +1,48 @@
+#!/usr/bin/env bpftrace
+/*
+ * Solution: Network Health Dashboard
+ */
+
+BEGIN
+{
+    printf("Network Health Dashboard running... (Ctrl+C to see summary)\n");
+}
+
+kprobe:tcp_connect
+{
+    @total_connections = count();
+}
+
+kretprobe:tcp_connect
+/retval < 0/
+{
+    @failed_connections = count();
+}
+
+kprobe:tcp_sendmsg
+{
+    @bytes_sent[comm] = sum(arg2);
+}
+
+kprobe:tcp_retransmit_skb
+{
+    @retransmissions = count();
+}
+
+END
+{
+    printf("\n");
+    printf("╔═══════════════════════════════════════╗\n");
+    printf("║     Network Health Dashboard          ║\n");
+    printf("╚═══════════════════════════════════════╝\n");
+    printf("\n");
+
+    printf("Total Connections: %d\n", @total_connections);
+    printf("Failed Connections: %d\n", @failed_connections);
+    printf("Retransmissions: %d\n", @retransmissions);
+
+    printf("\n");
+    printf("Bytes Sent by Process:\n");
+    print(@bytes_sent);
+    printf("\n");
+}
