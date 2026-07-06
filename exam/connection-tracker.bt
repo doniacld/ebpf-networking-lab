@@ -1,0 +1,50 @@
+#!/usr/bin/env bpftrace
+/*
+ * Exercise: Track TCP Connection Attempts by Process
+ *
+ * Your task: Complete this script to track which processes are making TCP connections.
+ * Fill in the TODO sections below using patterns from Challenge 09.
+ */
+
+BEGIN
+{
+    printf("Tracking TCP connection attempts by process... (Ctrl+C to stop)\n");
+}
+
+/*
+ * Exercise 1: Track all connection attempts
+ *
+ * TODO: Attach to tcp_connect kernel function and count all calls
+ * Hint: Use kprobe:tcp_connect and @total_attempts = count()
+ */
+// TODO: Add your kprobe here
+
+
+/*
+ * Exercise 2: Track attempts per process
+ *
+ * TODO: Count connection attempts by process name
+ * Hint: Use comm as the map key - @attempts_by_process[comm] = count()
+ */
+// TODO: Add your kprobe here
+
+
+/*
+ * Exercise 3: Access socket information
+ *
+ * TODO: Show you can access the socket structure (arg0)
+ * Hint: Just count to demonstrate access - @connections_with_socket_info = count()
+ */
+// TODO: Add your kprobe here
+
+
+/*
+ * Print live updates every 5 seconds
+ */
+interval:s:5
+{
+    printf("\n=== Connection Attempts (Live Update) ===\n");
+    print(@total_attempts);
+    print(@attempts_by_process);
+    printf("\n");
+}
