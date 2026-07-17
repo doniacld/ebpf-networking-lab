@@ -13,7 +13,7 @@ all: xdp tc socket
 
 xdp: xdp/xdp_drop.o
 tc: tc/tc_ratelimit.o
-socket: socket/sockops_tracker.o
+socket: socket/sockops_tracker.o socket/sk_msg_redirect.o
 
 # Pattern rule: build any .o from its matching .c
 %.o: %.c
