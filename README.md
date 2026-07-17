@@ -4,13 +4,15 @@ This repository contains hands-on examples for learning eBPF networking hooks.
 
 ## 📁 Directory Structure
 
+Program directories are numbered to match the Instruqt challenge that uses them:
+
 ```
 ebpf-networking-lab/
-├── examples/          # Challenge 01: Networking fundamentals demos
-├── xdp/              # Challenge 03: XDP packet processing
-├── tc/               # Challenge 04: Traffic Control (TC)
-├── socket/           # Challenge 05: Socket-level hooks
-└── bpftrace/         # Challenge 06: Network observability
+├── 05-xdp/           # Challenge 05: XDP packet processing
+├── 06-tc/            # Challenge 06: Traffic Control (TC)
+├── 08-socket/        # Challenge 08: Socket-level hooks (sockops + sk_msg)
+├── 09-bpftrace/      # Challenge 09: Network observability
+└── 12-exam/          # Challenge 12: Practical exam
 ```
 
 ## 🎯 Lab Overview
@@ -32,30 +34,23 @@ Or explore locally:
 - Linux kernel 5.10+ with BTF support
 - Tools: `clang`, `bpftool`, `bpftrace`, `iproute2`, `tcpdump`
 
-### Challenge 01: Networking Fundamentals
+### Build the programs
 
 ```bash
-cd examples/
-./capture_packet.sh       # See packet structure
-./show_layer2.sh          # Layer 2 (interfaces)
-./show_layer3.sh          # Layer 3 (routing)
-./show_layer4.sh          # Layer 4 (sockets)
-./show_layer7.sh          # Layer 7 (HTTP)
+make all        # compiles every eBPF program to its .o
 ```
-
-All scripts include explanations and expected output.
 
 ## 📚 Learning Path
 
-1. **Challenge 01**: Networking fundamentals (this repository's `examples/`)
-2. **Challenge 02**: Kernel networking internals
-3. **Challenge 03**: XDP packet processing (`xdp/`)
-4. **Challenge 04**: Traffic Control with TC (`tc/`)
-5. **Challenge 05**: Socket-level networking (`socket/`)
-6. **Challenge 06**: Network observability (`bpftrace/`)
-7. **Challenge 07**: Real-world architectures (Cilium, Hubble, Katran)
-8. **Challenge 08**: Quiz
-9. **Challenge 09**: Practical exam
+1. **Challenge 01**: Networking basics
+2. **Challenge 02**: Kernel & eBPF fundamentals
+3. **Challenge 05**: XDP packet processing (`05-xdp/`)
+4. **Challenge 06**: Traffic Control with TC (`06-tc/`)
+5. **Challenge 08**: Socket-level networking (`08-socket/`)
+6. **Challenge 09**: Network observability (`09-bpftrace/`)
+7. **Challenge 11**: Real-world architectures (Cilium, Hubble, Katran)
+8. **Challenge 10**: Checkpoint quiz
+9. **Challenge 12**: Practical exam (`12-exam/`)
 
 ## 🏆 Badge
 

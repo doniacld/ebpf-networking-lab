@@ -11,9 +11,9 @@ CFLAGS := -O2 -g -target bpf -I/usr/include/$(ARCH)-linux-gnu
 
 all: xdp tc socket
 
-xdp: xdp/xdp_drop.o
-tc: tc/tc_ratelimit.o
-socket: socket/sockops_tracker.o socket/sk_msg_redirect.o
+xdp: 05-xdp/xdp_drop.o
+tc: 06-tc/tc_ratelimit.o
+socket: 08-socket/sockops_tracker.o 08-socket/sk_msg_redirect.o
 
 # Pattern rule: build any .o from its matching .c
 %.o: %.c
@@ -21,5 +21,5 @@ socket: socket/sockops_tracker.o socket/sk_msg_redirect.o
 	@echo "  ✓ built $@"
 
 clean:
-	rm -f xdp/*.o tc/*.o socket/*.o
+	rm -f 05-xdp/*.o 06-tc/*.o 08-socket/*.o
 	@echo "  cleaned build artifacts"
