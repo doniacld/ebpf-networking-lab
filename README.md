@@ -8,11 +8,11 @@ Program directories are numbered to match the Instruqt challenge that uses them:
 
 ```
 ebpf-networking-lab/
-├── 05-xdp/           # Challenge 05: XDP packet processing
-├── 06-tc/            # Challenge 06: Traffic Control (TC)
-├── 08-socket/        # Challenge 08: Socket-level hooks (sockops + sk_msg)
-├── 09-bpftrace/      # Challenge 09: Network observability
-└── 12-exam/          # Challenge 12: Practical exam
+├── 03-xdp/           # Challenge 03: XDP packet processing
+├── 04-tc/            # Challenge 04: Traffic Control (TC)
+├── 05-socket/        # Challenge 05: Socket-level hooks (sockops + sk_msg)
+├── 06-bpftrace/      # Challenge 06: Network observability
+└── 09-exam/          # Challenge 09: Practical exam
 ```
 
 ## 🎯 Lab Overview
@@ -44,13 +44,13 @@ make all        # compiles every eBPF program to its .o
 
 1. **Challenge 01**: Networking basics
 2. **Challenge 02**: Kernel & eBPF fundamentals
-3. **Challenge 05**: XDP packet processing (`05-xdp/`)
-4. **Challenge 06**: Traffic Control with TC (`06-tc/`)
-5. **Challenge 08**: Socket-level networking (`08-socket/`)
-6. **Challenge 09**: Network observability (`09-bpftrace/`)
-7. **Challenge 11**: Real-world architectures (Cilium, Hubble, Katran)
-8. **Challenge 10**: Checkpoint quiz
-9. **Challenge 12**: Practical exam (`12-exam/`)
+3. **Challenge 03**: XDP packet processing (`03-xdp/`)
+4. **Challenge 04**: Traffic Control with TC (`04-tc/`)
+5. **Challenge 05**: Socket-level networking (`05-socket/`)
+6. **Challenge 06**: Network observability (`06-bpftrace/`)
+7. **Challenge 07**: Checkpoint quiz
+8. **Challenge 08**: Real-world architectures (Cilium, Hubble, Katran)
+9. **Challenge 09**: Practical exam (`09-exam/`)
 
 ## 🏆 Badge
 
