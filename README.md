@@ -12,7 +12,7 @@ ebpf-networking-lab/
 ├── 04-tc/            # Challenge 04: Traffic Control (TC)
 ├── 05-socket/        # Challenge 05: Socket-level hooks (sockops + sk_msg)
 ├── 06-bpftrace/      # Challenge 06: Network observability
-└── 09-exam/          # Challenge 09: Practical exam
+└── 08-exam/          # Challenge 08: Practical exam
 ```
 
 ## 🎯 Lab Overview
@@ -49,8 +49,7 @@ make all        # compiles every eBPF program to its .o
 5. **Challenge 05**: Socket-level networking (`05-socket/`)
 6. **Challenge 06**: Network observability (`06-bpftrace/`)
 7. **Challenge 07**: Checkpoint quiz
-8. **Challenge 08**: Real-world architectures (Cilium, Hubble, Katran)
-9. **Challenge 09**: Practical exam (`09-exam/`)
+8. **Challenge 08**: Practical exam (`08-exam/`)
 
 ## 🏆 Badge
 
